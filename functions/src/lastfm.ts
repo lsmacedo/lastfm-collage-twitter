@@ -1,17 +1,24 @@
 import axios from 'axios';
-import {LastFmConfig} from './config';
 
 const TAP_MUSIC_URL =
-  'https://www.tapmusic.net/collage.php?user=[user]&type=[type]&size=[size]&caption=[caption]&playcount=[playcount]';
+  'https://www.tapmusic.net/collage.php?user=[user]&type=[type]&size=[size]';
 
-const getUrlWithReplacedParams = (params: LastFmConfig) =>
-  TAP_MUSIC_URL.replace('[user]', params.user)
+type CollageSettings = {
+  username: string;
+  type: string;
+  size: string;
+  caption: boolean;
+  playcount: boolean;
+};
+
+const getUrlWithReplacedParams = (params: CollageSettings) =>
+  TAP_MUSIC_URL.replace('[user]', params.username)
       .replace('[type]', params.type)
       .replace('[size]', params.size)
-      .replace('[caption]', Boolean(params.caption).toString())
-      .replace('[playcount]', Boolean(params.playcount).toString());
+      .concat(params.caption ? '&caption=true' : '')
+      .concat(params.playcount ? '&playcount=true' : '');
 
-export const getCollageImage = async (params: LastFmConfig) => {
+export const getCollageImage = async (params: CollageSettings) => {
   const url = getUrlWithReplacedParams(params);
   const image = await axios.get<ArrayBuffer>(
       url,

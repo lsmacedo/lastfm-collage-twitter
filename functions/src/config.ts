@@ -16,14 +16,7 @@ export const configSchema = yup.object({
     }).required(),
   }),
   lastfm: yup.object({
-    user: yup.string().required(),
-    type: yup
-        .string()
-        .oneOf(['7day', '1month', '3month', '6month', '12month', 'overall'])
-        .default('7day'),
-    size: yup.string().oneOf(['3x3', '4x4', '5x5', '10x10']).default('3x3'),
-    caption: yup.boolean().default(true),
-    playcount: yup.boolean().default(false),
+    username: yup.string().required(),
   }),
 }).camelCase();
 
