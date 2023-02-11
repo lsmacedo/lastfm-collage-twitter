@@ -11,12 +11,11 @@ const getUrlWithReplacedParams = (params: LastFmConfig) =>
       .replace('[caption]', Boolean(params.caption).toString())
       .replace('[playcount]', Boolean(params.playcount).toString());
 
-export const getCollageImage =
-  async (params: LastFmConfig): Promise<ArrayBuffer> => {
-    const url = getUrlWithReplacedParams(params);
-    const image = await axios.get<ArrayBuffer>(
-        url,
-        {responseType: 'arraybuffer'}
-    );
-    return image.data;
-  };
+export const getCollageImage = async (params: LastFmConfig) => {
+  const url = getUrlWithReplacedParams(params);
+  const image = await axios.get<ArrayBuffer>(
+      url,
+      {responseType: 'arraybuffer'}
+  );
+  return image.data;
+};

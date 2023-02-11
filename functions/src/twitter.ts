@@ -57,7 +57,7 @@ const getAuthHeaderForRequest = (
 export const uploadMedia = async (
     config: TwitterConfig,
     image: ArrayBuffer
-): Promise<TwitterUploadMediaPayload> => {
+) => {
   const headers = {
     'user_id': config.userId,
     'screen_name': config.username,
@@ -91,7 +91,7 @@ export const uploadMedia = async (
 export const postTweet = async (
     config: TwitterConfig,
     tweetData: TwitterPostTweetInput
-): Promise<TwitterPostTweetPayload> => {
+) => {
   const headers = {
     'Content-Type': 'application/json',
   };
