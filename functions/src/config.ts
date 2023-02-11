@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const configSchema = yup.object({
+  secretKey: yup.string().required(),
   twitter: yup.object({
     userId: yup.string().required(),
     username: yup.string().required(),

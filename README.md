@@ -25,7 +25,9 @@ Run `firebase deploy` to deploy the function into your Firebase project.
 
 # Usage
 
-Make a POST request to `/tweetLastFmCollageImage` to get your image tweeted.
+Make a POST request to `/tweetLastFmCollageImage` to get your image tweeted. Be
+sure to set the `secret_key` in the request headers (the same secret key from
+your `.env` file).
 
 The following optional parameters can be passed in your request body to customize the output collage image:
 
