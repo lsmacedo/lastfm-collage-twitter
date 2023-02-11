@@ -1,8 +1,7 @@
 import FormData from 'form-data';
 import axios from 'axios';
-import crypto from 'crypto';
-import OAuth1a from 'oauth-1.0a';
 import {TwitterConfig} from './config';
+import {getAuthParamsForRequest} from './utils';
 
 type TwitterUploadMediaPayload = {
   media_id: number;
@@ -28,32 +27,6 @@ type TwitterPostTweetPayload = {
 const MEDIA_UPLOAD_URL = 'https://upload.twitter.com/1.1/media/upload.json';
 const POST_TWEET_URL = 'https://api.twitter.com/2/tweets';
 
-const getAuthHeaderForRequest = (
-    config: TwitterConfig,
-    request: OAuth1a.RequestOptions
-) => {
-  const oauth = new OAuth1a({
-    consumer: {
-      key: config.auth.consumerKey,
-      secret: config.auth.consumerSecret,
-    },
-    signature_method: 'HMAC-SHA1',
-    hash_function(baseString: string, key: string) {
-      return crypto
-          .createHmac('sha1', key)
-          .update(baseString)
-          .digest('base64');
-    },
-  });
-
-  const authorization = oauth.authorize(request, {
-    key: config.auth.accessToken,
-    secret: config.auth.tokenSecret,
-  });
-
-  return oauth.toHeader(authorization);
-};
-
 export const uploadMedia = async (
     config: TwitterConfig,
     image: ArrayBuffer
@@ -78,7 +51,7 @@ export const uploadMedia = async (
     body: formData,
   };
 
-  const authParams = getAuthHeaderForRequest(config, requestData);
+  const authParams = getAuthParamsForRequest(config.auth, requestData);
 
   const response = await axios.post<TwitterUploadMediaPayload>(
       requestData.url,
@@ -109,7 +82,7 @@ export const postTweet = async (
     body,
   };
 
-  const authParams = getAuthHeaderForRequest(config, requestData);
+  const authParams = getAuthParamsForRequest(config.auth, requestData);
 
   const response = await axios.post<TwitterPostTweetPayload>(
       requestData.url,
