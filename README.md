@@ -22,3 +22,20 @@ powered by [Tapmusic](https://www.tapmusic.net/).
 # Deploy
 
 Run `firebase deploy` to deploy the function into your Firebase project.
+
+# Usage
+
+Make a POST request to `/tweetLastFmCollageImage` to get your image tweeted.
+
+The following optional parameters can be passed in your request body to customize the output collage image:
+
+```js
+{
+  "collage": {
+    "type": "7day", // one of: 7day, 1month, 3month, 6month, 12month, overall
+    "size": "5x5", // one of: 3x3, 4x4, 5x5, 10x10
+    "caption": false,
+    "playcount": false
+  }
+}
+```
