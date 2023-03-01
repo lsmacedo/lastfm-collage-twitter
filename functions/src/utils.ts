@@ -6,12 +6,12 @@ type OAuthData = {
   consumerSecret: string;
   accessToken: string;
   tokenSecret: string;
-}
+};
 
 export const getAuthParamsForRequest = (
-    oAuthData: OAuthData,
-    request: OAuth1a.RequestOptions
-) => {
+  oAuthData: OAuthData,
+  request: OAuth1a.RequestOptions
+): OAuth1a.Header => {
   const oauth = new OAuth1a({
     consumer: {
       key: oAuthData.consumerKey,
@@ -19,10 +19,7 @@ export const getAuthParamsForRequest = (
     },
     signature_method: 'HMAC-SHA1',
     hash_function(baseString: string, key: string) {
-      return crypto
-          .createHmac('sha1', key)
-          .update(baseString)
-          .digest('base64');
+      return crypto.createHmac('sha1', key).update(baseString).digest('base64');
     },
   });
 

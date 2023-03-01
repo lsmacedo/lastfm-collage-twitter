@@ -11,18 +11,19 @@ type CollageSettings = {
   playcount: boolean;
 };
 
-const getUrlWithReplacedParams = (params: CollageSettings) =>
+const getUrlWithReplacedParams = (params: CollageSettings): string =>
   TAP_MUSIC_URL.replace('[user]', params.username)
-      .replace('[type]', params.type)
-      .replace('[size]', params.size)
-      .concat(params.caption ? '&caption=true' : '')
-      .concat(params.playcount ? '&playcount=true' : '');
+    .replace('[type]', params.type)
+    .replace('[size]', params.size)
+    .concat(params.caption ? '&caption=true' : '')
+    .concat(params.playcount ? '&playcount=true' : '');
 
-export const getCollageImage = async (params: CollageSettings) => {
+export const getCollageImage = async (
+  params: CollageSettings
+): Promise<ArrayBuffer> => {
   const url = getUrlWithReplacedParams(params);
-  const image = await axios.get<ArrayBuffer>(
-      url,
-      {responseType: 'arraybuffer'}
-  );
+  const image = await axios.get<ArrayBuffer>(url, {
+    responseType: 'arraybuffer',
+  });
   return image.data;
 };

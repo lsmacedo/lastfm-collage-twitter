@@ -1,28 +1,21 @@
 module.exports = {
-  root: true,
-  env: {
-    es6: true,
-    node: true,
-  },
   extends: [
+    'airbnb-base',
+    'airbnb-typescript/base',
     'eslint:recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'google',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['tsconfig.json', 'tsconfig.dev.json'],
-    sourceType: 'module',
+    project: './tsconfig.json',
   },
-  ignorePatterns: [
-    '/lib/**/*', // Ignore built files.
-  ],
-  plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'quotes': ['error', 'single'],
-    'import/no-unresolved': 0,
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      { allowExpressions: true },
+    ],
+    quotes: [2, 'single'],
+    'import/prefer-default-export': 'off',
   },
 };
